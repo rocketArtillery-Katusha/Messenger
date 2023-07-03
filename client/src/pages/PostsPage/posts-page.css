@@ -1,0 +1,31 @@
+.container__column-posts {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.container__btn-create-post {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-create-post {
+    cursor: pointer;
+    border-radius: 16px;
+    padding: 10px 40px;
+    background-color: var(--bg-color-second);
+    font-size: var(--third-text-size);
+    transition: 0.3s;
+}
+
+.btn-create-post:hover {
+    background-color: var(--text-hover-color)
+}
+
+.post-container__list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
