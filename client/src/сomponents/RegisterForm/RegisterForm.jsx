@@ -9,7 +9,7 @@ const RegisterForm = ({ setChoiceFrom }) => {
     const messageError = useSelector((state) => state.auth.message);
     const dispatch = useDispatch();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(registerUser(createUserData));
     };
