@@ -1,0 +1,40 @@
+.container__comment {
+    border-bottom: 2px solid var(--text-hover-color);
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+
+.comment__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment__img-author {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background-color: var(--text-hover-color);
+}
+
+.comment__meta {
+    flex: 1 1 0;
+    max-width: 100%;
+    min-width: 50px;
+}
+
+.comment__author {
+    color: var(--text-name-color);
+}
+
+.comment__data {
+    color: var(--secondary-text-color);
+    font-size: var(--secondary-text-size);
+}
