@@ -1,0 +1,223 @@
+.container__profile {
+    width: 100%;
+}
+
+.profile {
+    display: flex;
+    padding: 20px;
+    background-color: var(--bg-color-second);
+}
+
+.container__user-img {
+    max-width: 200px;
+    width: 100%;
+    margin-right: 20px;
+}
+
+.container__user-img>img {
+    max-width: 200px;
+    height: 250px;
+    margin-bottom: 10px;
+}
+
+.container__user-img>div {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 10px;
+}
+
+.container__user-img>div>img {
+    max-width: 200px;
+    height: 250px;
+}
+
+.hover-overlay__user-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    transition: 0.3s;
+}
+
+.hover-overlay__user-img:hover {
+    background-color: rgb(0, 0, 0, 0.5);
+}
+
+.hover-overlay__user-img>input {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.profile__menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__menu>button {
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    padding: 10px 40px;
+    background-color: var(--bg-color);
+    font-size: var(--primary-text-size);
+    transition: 0.3s;
+}
+
+.profile__menu>button:hover {
+    background-color: var(--text-hover-color);
+}
+
+.profile__user-info {
+    width: 100%;
+}
+
+.profile__username {
+    font-size: var(--third-text-size);
+    color: var(--text-name-color);
+    margin-bottom: 10px;
+}
+
+/* .user-info__list .user-info__item:nth-child(even) {
+    background-color: var(--bg-color-second);
+}
+
+.user-info__list .user-info__item:nth-child(odd) {
+    background-color: var(--bg-color);
+} */
+
+.user-info__item {
+    background: var(--bg-color);
+    padding: 10px 20px;
+    min-height: 50px;
+    border-radius: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.user-info__item>div {
+    line-height: 24px;
+}
+
+.user-info__item>h3 {
+    font-size: var(--primary-text-size);
+    max-width: 180px;
+    width: 100%;
+    margin-right: 10px;
+}
+
+
+.user-info__item>span {
+    position: absolute;
+    display: inline;
+    left: 280px;
+}
+
+.user-info__status {
+    max-width: max-content;
+    font-size: var(--primary-text-size);
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.user-info__status-update {
+    font-size: var(--primary-text-size);
+    max-width: 180px;
+    width: 100%;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.container-user-info__selection {
+    position: absolute;
+    display: flex;
+    left: 200px;
+}
+
+.selection {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.selection:hover {
+    z-index: 20;
+}
+
+.container__selection-value {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.container__selection-value>span {
+    background-color: #c3bdbd;
+    cursor: pointer;
+    min-width: 50px;
+    min-height: 30px;
+    padding: 5px 20px;
+    border-radius: 16px;
+    font-size: var(--primary-text-size);
+}
+
+.selection-value {
+    position: absolute;
+    top: 30px;
+    border-radius: 10px;
+    max-height: 150px;
+    overflow-y: scroll;
+    display: none;
+}
+
+.container__selection-value:hover .selection-value {
+    display: block;
+}
+
+.selection-value>span {
+    display: block;
+    cursor: pointer;
+    padding: 5px 20px;
+    background-color: #c3bdbd;
+    transition: 0.3s;
+}
+
+.selection-value>span:hover {
+    background-color: var(--text-hover-color);
+}
+
+.container-user-info__input {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container-user-info__input>input {
+    background-color: #c3bdbd;
+    font-size: var(--primary-text-size);
+    padding: 5px 20px;
+    border-radius: 16px;
+}
+
+.container-user-info__input>textarea {
+    background-color: #c3bdbd;
+    font-size: var(--primary-text-size);
+    padding: 5px 20px;
+    width: 100%;
+    height: 60px;
+    resize: none;
+    border-radius: 16px;
+}
+
+.container-user-info__input>input:hover {
+    background-color: var(--text-hover-color);
+}
