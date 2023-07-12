@@ -1,6 +1,7 @@
 import Header from './сomponents/Header/Header';
 import PostsPage from './pages/PostsPage/PostsPage';
 import AuthPage from './pages/AuthPage/AuthPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMe } from './redux/features/authSlice';
 import { useEffect } from 'react';
@@ -26,6 +27,7 @@ function App() {
           <div className='container'>
             <Routes>
               <Route path='/' element={<PostsPage />} />
+              <Route path='/profile' element={<ProfilePage />} />
             </Routes>
           </div>
         </div>
