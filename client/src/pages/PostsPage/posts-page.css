@@ -21,7 +21,7 @@
 }
 
 .btn-create-post:hover {
-    background-color: var(--text-hover-color)
+    background-color: var(--text-hover-color);
 }
 
 .post-container__list {

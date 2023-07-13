@@ -39,7 +39,7 @@ const ProfilePage = () => {
         genders: ["Мужской", "Женский"]
     });
 
-    const postsData = useSelector((state) => state.post.posts);
+    const postsData = useSelector((state) => state.post.myPosts);
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
