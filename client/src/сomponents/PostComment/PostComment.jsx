@@ -12,7 +12,7 @@ const PostComment = ({ comment }) => {
         <div className="container__comment">
             <div className="comment__header">
                 <div className='comment__img-author'>
-                    <img src={comment.userImg} alt="user-img" />
+                    <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${comment.userImg}`} alt={comment.userImg} />
                 </div>
                 <div className="comment__meta">
                     <div className='comment__author'>{comment.firstName} {comment.lastName}</div>
