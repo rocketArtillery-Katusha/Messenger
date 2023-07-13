@@ -43,7 +43,7 @@ const PostWIndow = ({ setOpenPostWindow, postData }) => {
                         <div className="post-container__inner">
                             <div className="post__header">
                                 <div className='post__img-author'>
-                                    <img src={postData.userImg} alt="user-img" />
+                                    <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${postData.userImg}`} alt={postData.userImg} />
                                 </div>
                                 <div className="post-item__meta">
                                     <div className='post__author'>{postData.firstName} {postData.lastName}</div>
@@ -66,7 +66,7 @@ const PostWIndow = ({ setOpenPostWindow, postData }) => {
                         </div>
                         <form onSubmit={handleSubmit}>
                             <div className="container-form__comment">
-                                <img src={postData.userImg} alt="user-img" />
+                                <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${postData.userImg}`} alt={postData.userImg} />
                                 <input value={commentData.comment} onChange={(e) => setCommentData({ ...commentData, comment: e.target.value })} placeholder='Написать комментарий...' type="text" />
                             </div>
                         </form>
@@ -81,7 +81,7 @@ const PostWIndow = ({ setOpenPostWindow, postData }) => {
                         <div className="post-container__inner">
                             <div className="post__header">
                                 <div className='post__img-author'>
-                                    <img src={postData.userImg} alt="user-img" />
+                                    <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${postData.userImg}`} alt={postData.userImg} />
                                 </div>
                                 <div className="post-item__meta">
                                     <div className='post__author'>{postData.firstName} {postData.lastName}</div>
@@ -104,7 +104,7 @@ const PostWIndow = ({ setOpenPostWindow, postData }) => {
                         </div>
                         <form onSubmit={handleSubmit}>
                             <div className="container-form__comment">
-                                <img src={postData.userImg} alt="user-img" />
+                                <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${postData.userImg}`} alt={postData.userImg} />
                                 <input value={commentData.comment} onChange={(e) => setCommentData({ ...commentData, comment: e.target.value })} placeholder='Написать комментарий...' type="text" />
                             </div>
                         </form>
