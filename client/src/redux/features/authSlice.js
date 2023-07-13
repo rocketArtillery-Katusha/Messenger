@@ -5,6 +5,7 @@ const initialState = {
     user: null,
     token: null,
     message: null,
+    test: null,
     isLoading: false,
 }
 
@@ -47,6 +48,17 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (userData) => 
         console.log(error);
     }
 });
+
+export const updateUserInfo = createAsyncThunk('auth/updateUserInfo', async (updatedUserData) => {
+    try {
+        const { data } = await axios.put('/auth/update-user-info', updatedUserData);
+
+        return data;
+
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 export const getMe = createAsyncThunk('auth/getMe', async () => {
     try {
@@ -93,6 +105,18 @@ const authSlice = createSlice({
             state.message = action.payload?.message;
         },
         [loginUser.rejected]: (state) => {
+            state.isLoading = false;
+        },
+
+        [updateUserInfo.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [updateUserInfo.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.user = action.payload?.user;
+            state.message = action.payload?.message;
+        },
+        [updateUserInfo.rejected]: (state) => {
             state.isLoading = false;
         },
 
