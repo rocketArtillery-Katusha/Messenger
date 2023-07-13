@@ -5,8 +5,18 @@ const UserSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    userImg: { type: String, default: 'https://oir.mobi/uploads/posts/2022-08/1661385261_40-oir-mobi-p-standartnii-fon-vatsap-instagram-56.png' },
-    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    userInfo: {
+        dateOfBirth: {
+            day: { type: Number, default: null },
+            month: { type: String, default: '' },
+            year: { type: Number, default: null },
+        },
+        gender: { type: String, default: 'Неуказано' },
+        hometown: { type: String, default: 'Неуказано' },
+        profileStatus: { type: String, default: '' },
+        userImg: { type: String, default: 'defaultUserImg.jpg' },
+    }
 }, { timestamps: true });
 
 export default mongoose.model('User', UserSchema);
