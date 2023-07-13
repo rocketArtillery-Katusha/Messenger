@@ -15,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
 app.use(express.static('uploadsPost'));
+app.use(express.static('uploadsUser'));
 
 app.use('/auth', authRoute);
 app.use('/post', postRoute);
