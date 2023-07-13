@@ -26,7 +26,7 @@ const Post = ({ postData }) => {
             {openPostWindow ? (<PostWIndow setOpenPostWindow={setOpenPostWindow} postData={postData} />) : ''}
             <div className="post-item__header">
                 <div className='post-item__img-author'>
-                    <img src={postData.userImg} alt='user-img' />
+                    <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${postData?.userImg}`} alt={postData?.userImg} />
                 </div>
                 <div className="post-item__meta">
                     <div className='post-item__author'>{postData.firstName} {postData.lastName}</div>
