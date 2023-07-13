@@ -17,7 +17,7 @@ export const createPost = async (req, res) => {
             const newPostWithImg = new Post({
                 firstName: user.firstName,
                 lastName: user.lastName,
-                userImg: user.userImg,
+                userImg: user.userInfo.userImg,
                 descPost,
                 imgPost: fileName,
                 authorId: req.userId,
@@ -34,7 +34,7 @@ export const createPost = async (req, res) => {
         const newPostWithoutImg = new Post({
             firstName: user.firstName,
             lastName: user.lastName,
-            userImg: user.userImg,
+            userImg: user.userInfo.userImg,
             descPost,
             imgPost: '',
             authorId: req.userId,
@@ -59,6 +59,27 @@ export const getAllPosts = async (req, res) => {
         const allPosts = await Post.find().sort({ _id: -1 });
 
         res.status(200).json(allPosts);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error
+        });
+    }
+};
+
+export const getMyPosts = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+
+        const myPosts = await Promise.all(user.posts.map((postId) => Post.findById(postId))).then((arr) => arr.reverse());
+
+        if (!myPosts) {
+            res.status(200).json({
+                message: 'Нет постов'
+            });
+        }
+
+        res.status(200).json({ myPosts });
 
     } catch (error) {
         res.status(500).json({
@@ -111,7 +132,7 @@ export const createComment = async (req, res) => {
         const newComment = new Comment({
             firstName: user.firstName,
             lastName: user.lastName,
-            userImg: user.userImg,
+            userImg: user.userInfo.userImg,
             comment,
             authorId: user._id
         });
@@ -135,12 +156,7 @@ export const getComments = async (req, res) => {
     try {
         const postId = req.params.id;
         const post = await Post.findById(postId);
-        const listComments = await Promise.all(
-            post.comments.map((commentId) => Comment.findById(commentId))
-
-        ).then((arr) => {
-            return arr.reverse();
-        });
+        const listComments = await Promise.all(post.comments.map((commentId) => Comment.findById(commentId))).then((arr) => arr.reverse());
 
         res.status(200).json(listComments);
 

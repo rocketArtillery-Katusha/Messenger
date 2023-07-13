@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 export const register = async (req, res) => {
     try {
@@ -44,6 +46,36 @@ export const login = async (req, res) => {
         });
     }
 
+};
+
+export const updateUserinfo = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+        const { day, month, year, gender, profileStatus, hometown } = req.body;
+
+        if (req.files) {
+            let fileName = Date.now().toString() + req.files.userImg.name;
+            const __dirname = dirname(fileURLToPath(import.meta.url));
+            req.files.userImg.mv(path.join(__dirname, '..', 'uploadsUser', fileName));
+            user.userInfo.userImg = fileName;
+        }
+
+        user.userInfo.dateOfBirth.day = Number(day);
+        user.userInfo.dateOfBirth.month = month;
+        user.userInfo.dateOfBirth.year = Number(year);
+        user.userInfo.gender = gender;
+        user.userInfo.profileStatus = profileStatus;
+        user.userInfo.hometown = hometown;
+
+        await user.save();
+
+        res.status(200).json({ user });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error
+        });
+    }
 };
 
 export const getMe = async (req, res) => {
