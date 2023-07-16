@@ -41,16 +41,16 @@
     flex: 1 1 0;
 }
 
-.header__menu>li {
+.header__menu>li>a {
     cursor: pointer;
     margin-left: 0px;
     line-height: 40px;
     border-radius: 16px;
-    padding: 0 20px;
+    padding: 10px;
     transition: 0.3s;
     font-size: var(--primary-text-size);
 }
 
-.header__menu>li:hover {
+.header__menu>li>a:hover {
     background-color: var(--text-hover-color)
 }

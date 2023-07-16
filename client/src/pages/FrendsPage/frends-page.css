@@ -1,0 +1,36 @@
+.container-users {
+    background-color: var(--bg-color-second);
+    padding: 20px;
+    width: 100%;
+}
+
+.container__user {
+    background-color: var(--bg-color);
+    padding: 10px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 10px;
+}
+
+.container__user:hover {
+    background-color: var(--text-hover-color);
+}
+
+.user-data {
+    max-width: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.user-data>img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.user-name {
+    color: var(--text-name-color);
+    font-size: var(--primary-text-size);
+}

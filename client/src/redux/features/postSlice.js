@@ -42,6 +42,14 @@ export const getMyPosts = createAsyncThunk('post/getMyPosts', async () => {
     }
 });
 
+export const getPostsById = createAsyncThunk('users/getPostsById', async (userId) => {
+
+    const { data } = await axios.get(`users/get-posts-by-id${userId}`);
+
+    return data;
+
+});
+
 export const likePost = createAsyncThunk('post/likePost', async (postId) => {
     try {
         const { data } = await axios.patch(`/post/like${postId}`);
@@ -112,6 +120,17 @@ const postSlice = createSlice({
             state.message = action.payload?.message;
         },
         [getMyPosts.rejected]: (state) => {
+            state.loading = false;
+        },
+
+        [getPostsById.pending]: (state) => {
+            state.loading = true;
+        },
+        [getPostsById.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.posts = action.payload?.posts;
+        },
+        [getPostsById.rejected]: (state) => {
             state.loading = false;
         },
 

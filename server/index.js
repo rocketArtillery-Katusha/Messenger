@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/post.js";
+import usersRoute from "./routes/actionsUsers.js";
 
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.static('uploadsUser'));
 
 app.use('/auth', authRoute);
 app.use('/post', postRoute);
+app.use('/users', usersRoute);
 
 async function startServer() {
     await mongoose.connect(`${process.env.DATABASE}`)

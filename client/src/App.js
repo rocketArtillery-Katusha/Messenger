@@ -2,6 +2,7 @@ import Header from './сomponents/Header/Header';
 import PostsPage from './pages/PostsPage/PostsPage';
 import AuthPage from './pages/AuthPage/AuthPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import FrendsPage from './pages/FrendsPage/FrendsPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMe } from './redux/features/authSlice';
 import { useEffect } from 'react';
@@ -16,7 +17,6 @@ function App() {
     dispatch(getMe());
   }, [dispatch]);
 
-
   return (
     <div className='wrapper'>
       {isAuth === null ? '' : typeof isAuth === 'object' ? (
@@ -27,7 +27,9 @@ function App() {
           <div className='container'>
             <Routes>
               <Route path='/' element={<PostsPage />} />
-              <Route path='/profile' element={<ProfilePage />} />
+              <Route path='frends' element={<FrendsPage />} />
+              <Route path='frends/profile/:id' element={<ProfilePage />} />
+              <Route path='profile' element={<ProfilePage />} />
             </Routes>
           </div>
         </div>
