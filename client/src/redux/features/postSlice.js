@@ -3,7 +3,6 @@ import axios from '../../utils/axios';
 
 const initialState = {
     posts: [],
-    myPosts: [],
     comments: [],
     message: null,
     loading: false
@@ -42,9 +41,9 @@ export const getMyPosts = createAsyncThunk('post/getMyPosts', async () => {
     }
 });
 
-export const getPostsById = createAsyncThunk('users/getPostsById', async (userId) => {
+export const getPostsById = createAsyncThunk('post/getPostsById', async (userId) => {
 
-    const { data } = await axios.get(`users/get-posts-by-id${userId}`);
+    const { data } = await axios.get(`post/get-posts-by-id${userId}`);
 
     return data;
 
@@ -116,7 +115,7 @@ const postSlice = createSlice({
         },
         [getMyPosts.fulfilled]: (state, action) => {
             state.loading = false;
-            state.myPosts = action.payload?.myPosts;
+            state.posts = action.payload?.myPosts;
             state.message = action.payload?.message;
         },
         [getMyPosts.rejected]: (state) => {
