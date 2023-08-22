@@ -5,6 +5,8 @@ const UserSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    friendRequests: [{ type: mongoose.Schema.Types.ObjectId }],
+    friends: [{ type: mongoose.Schema.Types.ObjectId }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     userInfo: {
         dateOfBirth: {
@@ -12,8 +14,8 @@ const UserSchema = new mongoose.Schema({
             month: { type: String, default: '' },
             year: { type: Number, default: null },
         },
-        gender: { type: String, default: 'Неуказано' },
-        hometown: { type: String, default: 'Неуказано' },
+        gender: { type: String, default: '' },
+        hometown: { type: String, default: '' },
         profileStatus: { type: String, default: '' },
         userImg: { type: String, default: 'defaultUserImg.jpg' },
     }
