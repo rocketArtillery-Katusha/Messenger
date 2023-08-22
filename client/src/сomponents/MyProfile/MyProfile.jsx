@@ -1,24 +1,25 @@
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import { logout } from '../../redux/features/authSlice';
 import { useEffect, useState } from 'react';
 import { getMyPosts } from '../../redux/features/postSlice';
 import { updateUserInfo } from '../../redux/features/authSlice';
 import Post from '../Post/Post'
 
 const MyProfile = () => {
-    const user = useSelector((state) => state.auth.user);
-    const postsData = useSelector((state) => state.post.myPosts);
+    const me = useSelector((state) => state.auth.me);
+    const postsData = useSelector((state) => state.post.posts);
     const dispatch = useDispatch();
 
     const [changeUserInfo, setChangeUserInfo] = useState(false);
     const [userData, setUserData] = useState({
-        day: user?.userInfo.dateOfBirth.day,
-        month: user?.userInfo.dateOfBirth.month,
-        year: user?.userInfo.dateOfBirth.year,
-        gender: user?.userInfo.gender,
-        hometown: user?.userInfo.hometown,
-        profileStatus: user?.userInfo.profileStatus,
-        userImg: `${process.env.REACT_APP_BACKEND_BASE_URL}/${user?.userInfo.userImg}`
+        day: me?.userInfo.dateOfBirth.day,
+        month: me?.userInfo.dateOfBirth.month,
+        year: me?.userInfo.dateOfBirth.year,
+        gender: me?.userInfo.gender,
+        hometown: me?.userInfo.hometown,
+        profileStatus: me?.userInfo.profileStatus,
+        userImg: `${process.env.REACT_APP_BACKEND_BASE_URL}/${me?.userInfo.userImg}`
     });
 
     const [selectionsData, setSelectionsData] = useState({
@@ -57,14 +58,20 @@ const MyProfile = () => {
     const undoСhanges = () => {
         setChangeUserInfo(false);
         setUserData({
-            day: user.userInfo.dateOfBirth.day,
-            month: user.userInfo.dateOfBirth.month,
-            year: user.userInfo.dateOfBirth.year,
-            gender: user.userInfo.gender,
-            hometown: user.userInfo.hometown,
-            profileStatus: user.userInfo.profileStatus,
-            userImg: `${process.env.REACT_APP_BACKEND_BASE_URL}/${user.userInfo.userImg}`
+            day: me.userInfo.dateOfBirth.day,
+            month: me.userInfo.dateOfBirth.month,
+            year: me.userInfo.dateOfBirth.year,
+            gender: me.userInfo.gender,
+            hometown: me.userInfo.hometown,
+            profileStatus: me.userInfo.profileStatus,
+            userImg: `${process.env.REACT_APP_BACKEND_BASE_URL}/${me.userInfo.userImg}`
         });
+    };
+
+    const hendleLogout = () => {
+        localStorage.removeItem('token');
+        dispatch(logout());
+        window.location.reload();
     };
 
     useEffect(() => {
@@ -119,15 +126,15 @@ const MyProfile = () => {
                     </div>
                 ) : (
                     <div className="container__user-img">
-                        <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${user?.userInfo.userImg}`} alt={user?.userInfo.userImg} />
+                        <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${me?.userInfo.userImg}`} alt={me?.userInfo.userImg} />
                         <div className="profile__menu">
-                            <button type='button' onClick={() => setChangeUserInfo(true)}>Изменить</button>
-                            <button type='button'>Выйти</button>
+                            <button onClick={() => setChangeUserInfo(true)}>Изменить</button>
+                            <button onClick={() => hendleLogout()}>Выйти</button>
                         </div>
                     </div>
                 )}
                 <div className="profile__user-info">
-                    <div className="profile__username">{user?.firstName} {user?.lastName}</div>
+                    <div className="profile__username">{me?.firstName} {me?.lastName}</div>
                     <ul className="user-info__list">
                         <li className="user-info__item">
                             Дата рождения: {changeUserInfo ? (
