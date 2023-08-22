@@ -88,6 +88,22 @@ export const getMyPosts = async (req, res) => {
     }
 };
 
+export const getPostsById = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+
+        const posts = await Promise.all(user.posts.map((postId) => Post.findById(postId))).then((arr) => arr.reverse());
+
+        res.json({ posts });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error
+        });
+    }
+}
+
 export const likePost = async (req, res) => {
     try {
         const postId = req.params.id;
