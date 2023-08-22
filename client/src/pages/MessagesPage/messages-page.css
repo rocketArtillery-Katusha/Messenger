@@ -1,0 +1,11 @@
+.container-conversations {
+    width: 100%;
+    min-height: 600px;
+    background-color: var(--bg-color-second);
+    padding: 20px;
+}
+
+.conversations {
+    width: 100%;
+    height: 100%;
+}
