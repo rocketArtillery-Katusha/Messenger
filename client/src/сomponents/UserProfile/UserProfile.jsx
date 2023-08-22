@@ -1,19 +1,65 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserById } from '../../redux/features/actionUserSlice';
+import { createConversation, getConversations } from '../../redux/features/socketSlice';
 import { getPostsById } from '../../redux/features/postSlice';
-import { useEffect } from 'react';
+import { getUserById, deleteFriend, cancelFriendRequest, sendFriendRequest } from '../../redux/features/authSlice';
+import { useEffect, useState, useContext } from 'react';
+import { socketContext } from '../../utils/socketContext';
+import { Link } from 'react-router-dom';
 import Post from '../Post/Post';
 
 const UserProfile = ({ userId }) => {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.actionsUsers.user);
+    const user = useSelector((state) => state.auth.user);
+    const me = useSelector((state) => state.auth.me);
+    const conversations = useSelector((state) => state.socket.conversations);
     const userPosts = useSelector((state) => state.post.posts);
+    const [checkMyRequest, setCheckMyRequest] = useState(null);
+    const [checkConversation, setCheckConversation] = useState(null);
+    const [checkFriend, setCheckFriend] = useState(null);
+    const socket = useContext(socketContext);
+
+    const handleSubmit = (typeAction) => {
+        switch (typeAction) {
+            case 'DELETE':
+                socket.current?.emit('deleteFriend', { me, user });
+                dispatch(deleteFriend(user?._id));
+                break;
+
+            case 'UNSCRIBE':
+                socket.current?.emit('cancleRequest', { me, user });
+                dispatch(cancelFriendRequest(user?._id));
+                break;
+
+            case 'SENDREQUEST':
+                socket.current?.emit('requestFriend', { me, user })
+                dispatch(sendFriendRequest(user?._id));
+                break;
+
+            default:
+                break;
+        }
+    }
 
     useEffect(() => {
+        if (user) {
+            const findFriend = user.friends.find((userId) => userId === me?._id);
+            const findMyRequest = user.friendRequests.find((userId) => userId === me?._id);
+            setCheckFriend(findFriend);
+            setCheckMyRequest(findMyRequest);
+        }
+        if (conversations) {
+            const findConversation = conversations.find((conversation) => conversation.members.find((userId) => userId === user?._id));
+            setCheckConversation(findConversation);
+        }
+
+    }, [user, me, conversations]);
+
+    useEffect(() => {
+        dispatch(getConversations(me._id));
         dispatch(getUserById(userId));
         dispatch(getPostsById(userId));
-    }, [dispatch, userId]);
+    }, [dispatch, userId, me]);
 
     return (
         <>
@@ -23,8 +69,20 @@ const UserProfile = ({ userId }) => {
                         <img src={`${process.env.REACT_APP_BACKEND_BASE_URL}/${user?.userInfo.userImg}`} alt={user?.userInfo.userImg} />
                     </div>
                     <div className="profile__menu">
-                        <button>Добавить</button>
-                        <button>Написать</button>
+                        {checkFriend ? (
+                            <button onClick={() => handleSubmit('DELETE')}>Удалить</button>
+                        ) : checkMyRequest ? (
+                            <button onClick={() => handleSubmit('UNSCRIBE')}>Отписаться</button>
+                        ) : (
+                            <button onClick={() => handleSubmit('SENDREQUEST')}>Добавить</button>
+                        )}
+                        {checkConversation ? (
+                            <Link to={`/messages/${checkConversation._id}`}>
+                                <button>Написать</button>
+                            </Link>
+                        ) : (
+                            <button onClick={() => dispatch(createConversation(user?._id))}>Написать</button>
+                        )}
                     </div>
                 </div>
                 <div className="profile__user-info">
