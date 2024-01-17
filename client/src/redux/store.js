@@ -1,12 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authSlice from './features/authSlice';
-import postSlice from './features/postSlice';
-import socketSlice from './features/socketSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authSlice from "./auth-slice";
+import userSlice from "./user-slice";
+import postSlice from "./post-slice";
+import commnetSlice from "./comment-slice";
+import conversationSlice from "./conversation-slice";
+import messageSlice from "./message-slice";
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
         auth: authSlice,
+        user: userSlice,
         post: postSlice,
-        socket: socketSlice,
+        comment: commnetSlice,
+        conversation: conversationSlice,
+        message: messageSlice,
     },
 });
+
+export default store;

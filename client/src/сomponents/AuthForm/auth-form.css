@@ -1,0 +1,29 @@
+.container__forms {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bg-color-second);
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth__header {
+  display: flex;
+  height: 60px;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 2px solid var(--text-hover-color);
+}
+
+.auth__header h1 {
+  font-weight: 600;
+  font-size: var(--fourth-text-size);
+}
+
+.auth__content {
+  padding: 10px 40px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

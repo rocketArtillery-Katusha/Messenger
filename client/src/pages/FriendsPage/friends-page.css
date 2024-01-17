@@ -4,7 +4,7 @@
     width: 100%;
 }
 
-.container-users>div>h1 {
+.container-users > div > h1 {
     margin-bottom: 20px;
 }
 
@@ -14,7 +14,7 @@
     margin-bottom: 20px;
 }
 
-.frends-page__menu>li {
+.frends-page__menu > li {
     cursor: pointer;
     margin: 0 10px;
     color: var(--text-name-color);
@@ -22,55 +22,6 @@
     border-bottom: 2px solid transparent;
 }
 
-.frends-page__menu>li:hover {
+.frends-page__menu > li:hover {
     border-bottom: 2px solid var(--text-name-color);
-}
-
-.container__user {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--bg-color);
-    padding: 10px 20px;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-bottom: 10px;
-}
-
-.container__user a {
-    width: 100%;
-}
-
-.container__user>button {
-    background-color: var(--bg-btn-color);
-    color: var(--third-text-color);
-    font-size: var(--primary-text-size);
-    border-radius: 16px;
-    padding: 10px;
-    height: fit-content;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.container__user:hover {
-    background-color: var(--text-hover-color);
-}
-
-.user-data {
-    max-width: fit-content;
-    display: flex;
-    align-items: center;
-}
-
-.user-data>img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 20px;
-}
-
-.user-name {
-    color: var(--text-name-color);
-    font-size: var(--primary-text-size);
 }

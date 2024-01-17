@@ -1,0 +1,9 @@
+.auth__input input {
+  width: 100%;
+  background-color: var(--bg-color);
+  font-size: var(--primary-text-size);
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
+  border: 2px solid var(--text-hover-color);
+}

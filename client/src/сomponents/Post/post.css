@@ -39,7 +39,7 @@
     color: var(--text-name-color);
 }
 
-.post-item__data {
+.post-item__date {
     color: var(--secondary-text-color);
     font-size: var(--secondary-text-size);
 }
@@ -75,5 +75,5 @@
 }
 
 .post-item-menu__item:hover {
-    background-color: var(--text-hover-color)
+    background-color: var(--text-hover-color);
 }

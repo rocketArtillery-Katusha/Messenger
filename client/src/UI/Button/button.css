@@ -1,0 +1,13 @@
+.buttonUI {
+  line-height: 40px;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  font-size: var(--primary-text-size);
+  padding: 0 20px;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+.buttonUI:hover {
+  background-color: var(--text-hover-color);
+}

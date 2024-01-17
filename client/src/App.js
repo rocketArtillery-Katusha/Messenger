@@ -1,77 +1,85 @@
-import Header from './сomponents/Header/Header';
-import PostsPage from './pages/PostsPage/PostsPage';
-import AuthPage from './pages/AuthPage/AuthPage';
-import ProfilePage from './pages/ProfilePage/ProfilePage';
-import FriendsPage from './pages/FriendsPage/FriendsPage';
-import ConversationPage from './pages/ConversationPage/ConversationPage';
-import MessagesPage from './pages/MessagesPage/MessagesPage';
-import { useDispatch, useSelector } from 'react-redux';
-import { getMe, socketUpdateMe } from './redux/features/authSlice';
-import { useEffect, useRef } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { socketContext } from './utils/socketContext';
-import io from 'socket.io-client';
-import './App.css';
+import Header from "./сomponents/Header/Header";
+import PostsPage from "./pages/PostsPage/PostsPage";
+import AuthPage from "./pages/AuthPage/AuthPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import FriendsPage from "./pages/FriendsPage/FriendsPage";
+import ConversationsPage from "./pages/ConversationsPage/ConversationsPage";
+import ConversationPage from "./pages/ConversationPage/ConversationPage";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useLoadingWithAccessToken } from "./hooks/useLoadingWithAccessTokne";
+import { useEffect } from "react";
+import { setAuth } from "./redux/auth-slice";
+import { getMessagesOrMessage } from "./redux/message-slice";
+import socketInit from "./socket/socket";
+import actions from "./socket/actions";
+import "./App.css";
 
 function App() {
-  const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.me);
-  const socket = useRef();
+    const { loading } = useLoadingWithAccessToken();
+    const { isAuth } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getMe());
-  }, [dispatch]);
+    useEffect(() => {
+        if (!loading && user) {
+            const socket = socketInit();
+            socket.emit(actions.ADD_USER, user.id);
+            socket.on(actions.GET_REQUEST, (data) => {
+                dispatch(setAuth(data));
+            });
+            socket.on(actions.GET_MY_FRIEND, (data) => {
+                dispatch(setAuth(data));
+            });
+            socket.on(actions.GET_MESSAGE, (data) => {
+                dispatch(getMessagesOrMessage(data));
+            });
+        }
+    }, [loading, user, dispatch]);
 
-  useEffect(() => {
+    return (
+        <div className="wrapper">
+            {loading ? (
+                <div>Загрузка</div>
+            ) : (
+                <div className="wrapper-container">
+                    {isAuth && (
+                        <header className="header">
+                            <Header />
+                        </header>
+                    )}
+                    <div className="container">
+                        <Routes>
+                            <Route
+                                path="/"
+                                element={
+                                    <GuestRoute>
+                                        <AuthPage />
+                                    </GuestRoute>
+                                }
+                            />
+                            <Route path="conversations/:id" element={<ConversationPage />} />
+                            <Route path="conversations" element={<ConversationsPage />} />
+                            <Route path="main" element={<PostsPage />} />
+                            <Route path="friends" element={<FriendsPage />} />
+                            {["profile", "profile/:id"].map((path, index) => (
+                                <Route path={path} element={<ProfilePage />} key={index} />
+                            ))}
+                        </Routes>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+const GuestRoute = ({ children }) => {
+    const { isAuth } = useSelector((state) => state.auth);
+    const location = useLocation();
     if (isAuth) {
-      socket.current = io("ws://localhost:8900");
-      socket.current.emit("addUser", isAuth._id);
-      socket.current.on("deletedFriend", ({ updatedUser, deletedFriend }) => {
-        dispatch(socketUpdateMe({ updatedUser, deletedFriend }));
-      });
-      socket.current.on("requestsFriends", ({ updatedUser, newRequest }) => {
-        dispatch(socketUpdateMe({ updatedUser, newRequest }));
-      });
-      socket.current.on("cancledRequest", ({ updatedUser, deletedRequest }) => {
-        dispatch(socketUpdateMe({ updatedUser, deletedRequest }));
-      });
-      socket.current.on("addedFriend", ({ updatedUser, addedFriend }) => {
-        dispatch(socketUpdateMe({ updatedUser, addedFriend }));
-      });
-      socket.current.on("getMessage", (data) => {
-        // dispatch(updateMessageState(data))
-      });
+        return <Navigate to="main" state={{ from: location }} />;
     }
-  }, [dispatch, isAuth]);
-
-  return (
-    <socketContext.Provider value={socket}>
-      <div className='wrapper'>
-        {isAuth === null ? '' : typeof isAuth === 'object' ? (
-          <div className='wrapper-container'>
-            <header className='header'>
-              <Header />
-            </header>
-            <div className='container'>
-              <Routes>
-                <Route path='/' element={<PostsPage />} />
-                <Route path='friends' element={<FriendsPage />} />
-                {['profile', 'profile/:id'].map((path, index) => <Route path={path} element={<ProfilePage />} key={index} />)}
-                <Route path='messages' element={<MessagesPage />} />
-                <Route path='messages/:id' element={<ConversationPage />} />
-              </Routes>
-            </div>
-          </div>
-        ) : (
-          <div className='wrapper-container'>
-            <div className='container'>
-              <AuthPage />
-            </div>
-          </div>
-        )}
-      </div>
-    </socketContext.Provider>
-  );
+    return children;
 };
 
 export default App;

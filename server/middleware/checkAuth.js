@@ -1,21 +1,19 @@
-import jwt from 'jsonwebtoken';
+const tokenService = require("../services/token-service");
 
-export const checkAuth = (req, res, next) => {
+module.exports = checkAuth = (req, res, next) => {
     try {
         const token = req.headers.authorization;
 
         if (token) {
-            const decoded = jwt.verify(token, process.env.SECRET__KEY);
+            const decoded = tokenService.verifyAccessToken({ token });
             req.userId = decoded.id;
 
             next();
-
         } else {
             return res.status(401).json({
-                message: 'Нет достпуа'
+                message: "Нет достпуа",
             });
         }
-
     } catch (error) {
         res.status(500).json({
             message: error,
